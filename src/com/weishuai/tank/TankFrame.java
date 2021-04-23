@@ -11,8 +11,9 @@ import java.util.List;
 public class TankFrame extends Frame {
 
     // 初始化坦克位置
-    Tank myTank = new Tank(200, 200, Dir.DOWM, this);
+    Tank myTank = new Tank(200, 400, Dir.DOWM, this);
     List<Bullet> bullets = new ArrayList<>();
+    List<Tank> tanks = new ArrayList<>();
     static final int GAME_WIDTH = 800, GAME_HEIGHT = 600;
 
     /**
@@ -67,6 +68,10 @@ public class TankFrame extends Frame {
         for (int i = 0; i < bullets.size(); i++) {
             // 画子弹
             bullets.get(i).paint(g);
+        }
+        for (int i = 0; i < tanks.size(); i++) {
+            // 画子弹
+            tanks.get(i).paint(g);
         }
 
     }
