@@ -5,7 +5,9 @@ import java.awt.*;
 public class Tank {
     private int x, y;
     private Dir dir = Dir.DOWM;
-    private static final int speed = 10;
+    private static final int SPEED = 5;
+
+    private boolean moving = false;
 
     public Tank(int x, int y, Dir dir) {
         super();
@@ -39,21 +41,41 @@ public class Tank {
     }
 
     public static int getSpeed() {
-        return speed;
+        return SPEED;
+    }
+
+    public boolean isMoving() {
+        return moving;
+    }
+
+    public void setMoving(boolean moving) {
+        this.moving = moving;
     }
 
     public void paint(Graphics g) {
         g.fillRect(x,y ,50,50);
+        move();
+
+    }
+
+    private void move() {
+        if (!moving) return;
         // 根据方向移动
         switch (dir) {
             case LEFT:
-                x -= speed;
+                x -= SPEED;
+                break;
             case UP:
-                y -= speed;
+                y -= SPEED;
+                break;
             case RIGHT:
-                x += speed;
+                x += SPEED;
+                break;
             case DOWM:
-                y += speed;
+                y += SPEED;
+                break;
+            default:
+                break;
         }
     }
 }

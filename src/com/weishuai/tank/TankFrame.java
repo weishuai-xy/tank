@@ -10,6 +10,7 @@ public class TankFrame extends Frame {
 
     // 初始化坦克位置
     Tank myTank = new Tank(200, 200, Dir.DOWM);
+    Bullet b = new Bullet(300, 300, Dir.DOWM);
     /**
      * 窗口类 setSize setResizable setTitle  setVisible
      */
@@ -37,6 +38,7 @@ public class TankFrame extends Frame {
     @Override
     public void paint(Graphics g) {
         myTank.paint(g);
+        b.paint(g);
     }
 
     class MyKeyListener extends KeyAdapter {
@@ -93,10 +95,17 @@ public class TankFrame extends Frame {
         }
 
         private void setMainTankDir() {
-            if(bL) myTank.setDir(Dir.LEFT);
-            if(bU) myTank.setDir(Dir.UP);
-            if(bR) myTank.setDir(Dir.RIGHT);
-            if(bD) myTank.setDir(Dir.DOWM);
+
+
+            if (!bL && !bU && !bR && !bD) {
+                myTank.setMoving(false);
+            } else {
+                myTank.setMoving(true);
+                if(bL) myTank.setDir(Dir.LEFT);
+                if(bU) myTank.setDir(Dir.UP);
+                if(bR) myTank.setDir(Dir.RIGHT);
+                if(bD) myTank.setDir(Dir.DOWM);
+            }
         }
     }
 
