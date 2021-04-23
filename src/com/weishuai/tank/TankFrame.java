@@ -11,11 +11,14 @@ public class TankFrame extends Frame {
     // 初始化坦克位置
     Tank myTank = new Tank(200, 200, Dir.DOWM);
     Bullet b = new Bullet(300, 300, Dir.DOWM);
+
+    static final int GAME_WIDTH = 800, GAME_HEIGHT = 600;
+
     /**
      * 窗口类 setSize setResizable setTitle  setVisible
      */
     public TankFrame() {
-        setSize(800,600);
+        setSize(GAME_WIDTH,GAME_HEIGHT);
         setResizable(false);
         setTitle("tank war");
         setVisible(true);
@@ -31,13 +34,32 @@ public class TankFrame extends Frame {
         });
     }
 
+    // 用双缓冲解决闪烁问题
+    Image offScreenImage = null;
+
+    @Override
+    public void update(Graphics g) {
+        if (offScreenImage == null) {
+            offScreenImage = this.createImage(GAME_WIDTH, GAME_HEIGHT);
+        }
+        Graphics gOffScreen = offScreenImage.getGraphics();
+        Color c = gOffScreen.getColor();
+        gOffScreen.setColor(Color.BLACK);
+        gOffScreen.fillRect(0, 0,GAME_WIDTH, GAME_HEIGHT);
+        gOffScreen.setColor(c);
+        paint(gOffScreen);
+        g.drawImage(offScreenImage, 0, 0, null);
+    }
+
     /**
      * 窗口需要重新绘制的时候
      * @param g 画笔
      */
     @Override
     public void paint(Graphics g) {
+        // 画坦克
         myTank.paint(g);
+        // 画子弹
         b.paint(g);
     }
 
