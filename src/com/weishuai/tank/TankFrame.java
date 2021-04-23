@@ -8,7 +8,10 @@ import java.awt.event.WindowEvent;
 
 public class TankFrame extends Frame {
 
+    // 初始化坦克位置
     int x = 200, y = 200;
+    Dir dir = Dir.DOWM;
+    private static final int speed = 10;
     /**
      * 窗口类 setSize setResizable setTitle  setVisible
      */
@@ -18,7 +21,7 @@ public class TankFrame extends Frame {
         setTitle("tank war");
         setVisible(true);
 
-
+        // 增加键的监听事件
         this.addKeyListener(new MyKeyListener());
         // 关闭程序
         addWindowListener(new WindowAdapter() {
@@ -37,11 +40,20 @@ public class TankFrame extends Frame {
     public void paint(Graphics g) {
         System.out.println("paint");
         g.fillRect(x,y ,50,50);
-//        x += 10;
-//        y += 10;
+        switch (dir) {
+            case LEFT:
+                x -= speed;
+            case UP:
+                y -= speed;
+            case RIGHT:
+                x += speed;
+            case DOWM:
+                y += speed;
+        }
     }
 
     class MyKeyListener extends KeyAdapter {
+        // 四个方向状态
         boolean bL = false;
         boolean bU = false;
         boolean bR = false;
@@ -66,6 +78,8 @@ public class TankFrame extends Frame {
                     break;
 
             }
+
+            setMainTankDir();
         }
 
         @Override
@@ -88,6 +102,14 @@ public class TankFrame extends Frame {
                     break;
 
             }
+            setMainTankDir();
+        }
+
+        private void setMainTankDir() {
+            if(bL) dir = Dir.LEFT;
+            if(bU) dir = Dir.UP;
+            if(bR) dir = Dir.RIGHT;
+            if(bD) dir = Dir.DOWM;
         }
     }
 
