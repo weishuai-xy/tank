@@ -9,9 +9,7 @@ import java.awt.event.WindowEvent;
 public class TankFrame extends Frame {
 
     // 初始化坦克位置
-    int x = 200, y = 200;
-    Dir dir = Dir.DOWM;
-    private static final int speed = 10;
+    Tank myTank = new Tank(200, 200, Dir.DOWM);
     /**
      * 窗口类 setSize setResizable setTitle  setVisible
      */
@@ -38,18 +36,7 @@ public class TankFrame extends Frame {
      */
     @Override
     public void paint(Graphics g) {
-        System.out.println("paint");
-        g.fillRect(x,y ,50,50);
-        switch (dir) {
-            case LEFT:
-                x -= speed;
-            case UP:
-                y -= speed;
-            case RIGHT:
-                x += speed;
-            case DOWM:
-                y += speed;
-        }
+        myTank.paint(g);
     }
 
     class MyKeyListener extends KeyAdapter {
@@ -106,10 +93,10 @@ public class TankFrame extends Frame {
         }
 
         private void setMainTankDir() {
-            if(bL) dir = Dir.LEFT;
-            if(bU) dir = Dir.UP;
-            if(bR) dir = Dir.RIGHT;
-            if(bD) dir = Dir.DOWM;
+            if(bL) myTank.setDir(Dir.LEFT);
+            if(bU) myTank.setDir(Dir.UP);
+            if(bR) myTank.setDir(Dir.RIGHT);
+            if(bD) myTank.setDir(Dir.DOWM);
         }
     }
 
