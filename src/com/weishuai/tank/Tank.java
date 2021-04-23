@@ -9,10 +9,12 @@ public class Tank {
 
     private boolean moving = false;
 
-    private static int WIDTH = ResourceMgr.tankD.getWidth(), HEIGHT = ResourceMgr.tankD.getHeight();
+    public static int WIDTH = ResourceMgr.tankD.getWidth(), HEIGHT = ResourceMgr.tankD.getHeight();
 
     // 持有对象的引用
     private TankFrame tf = null;
+
+    private boolean living = true;
 
     public Tank(int x, int y, Dir dir, TankFrame tf) {
         super();
@@ -59,6 +61,9 @@ public class Tank {
     }
 
     public void paint(Graphics g) {
+        if (!living) {
+            tf.tanks.remove(this);
+        }
         switch (dir) {
             case LEFT:
                 g.drawImage(ResourceMgr.tankL, x, y, null);
@@ -102,5 +107,9 @@ public class Tank {
         int bX = this.x + Tank.WIDTH / 2 - Bullet.WIDTH / 2;
         int bY = this.y + Tank.HEIGHT / 2 - Bullet.HEIGHT / 2;
         tf.bullets.add(new Bullet(bX, bY, this.dir, this.tf));
+    }
+
+    public void die() {
+        this.living = false;
     }
 }
