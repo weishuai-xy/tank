@@ -14,6 +14,8 @@ public class TankFrame extends Frame {
     Tank myTank = new Tank(200, 400, Dir.DOWM, Group.GOOD, this);
     List<Bullet> bullets = new ArrayList<>();
     List<Tank> tanks = new ArrayList<>();
+    Explode e = new Explode(100, 100, this);
+
     static final int GAME_WIDTH = 800, GAME_HEIGHT = 600;
 
     /**
@@ -38,7 +40,6 @@ public class TankFrame extends Frame {
 
     // 用双缓冲解决闪烁问题
     Image offScreenImage = null;
-
     @Override
     public void update(Graphics g) {
         if (offScreenImage == null) {
@@ -64,22 +65,24 @@ public class TankFrame extends Frame {
         g.drawString("子弹的数量" + bullets.size(), 10,60);
         g.drawString("敌人的数量" + tanks.size(), 10,80);
         g.setColor(c);
-        // 画坦克
+        // 画主坦克
         myTank.paint(g);
         for (int i = 0; i < bullets.size(); i++) {
             // 画子弹
             bullets.get(i).paint(g);
         }
         for (int i = 0; i < tanks.size(); i++) {
-            // 画子弹
+            // 画敌人坦克
             tanks.get(i).paint(g);
         }
 
+        // 消灭坦克
         for (int i = 0; i < bullets.size() ; i++) {
             for (int j = 0; j < tanks.size() ; j++) {
                 bullets.get(i).collideWidth(tanks.get(j));
             }
         }
+        e.paint(g);
 
     }
 

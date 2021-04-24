@@ -3,6 +3,7 @@ package com.weishuai.tank;
 public class Main {
     public static void main(String[] args) throws InterruptedException {
         TankFrame tankFrame = new TankFrame();
+        // 默认加入五个敌方坦克
         for (int i = 0; i < 5; i++) {
             tankFrame.tanks.add(new Tank(50 + i * 80, 200, Dir.DOWM, Group.BAD, tankFrame));
         }
