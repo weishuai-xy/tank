@@ -12,6 +12,8 @@ public class Tank {
 
     public static int WIDTH = ResourceMgr.goodTankU.getWidth(), HEIGHT = ResourceMgr.goodTankU.getHeight();
 
+    Rectangle rect = new Rectangle();
+
     private Random random = new Random();
     // 持有对象的引用
     private TankFrame tf = null;
@@ -27,6 +29,10 @@ public class Tank {
         this.dir = dir;
         this.group = group;
         this.tf = tf;
+        rect.x = this.x;
+        rect.y = this.y;
+        rect.width = WIDTH;
+        rect.height = HEIGHT;
     }
 
     public int getX() {
@@ -112,6 +118,7 @@ public class Tank {
             default:
                 break;
         }
+
         if (this.group == Group.BAD && random.nextInt(100) > 95) {
             this.fire();
         }
@@ -119,6 +126,9 @@ public class Tank {
             randomDir();
         // 边界检测
         boundsCheck();
+
+        rect.x = this.x;
+        rect.y = this.y;
     }
 
     /**
