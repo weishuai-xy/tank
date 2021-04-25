@@ -20,6 +20,8 @@ public class Explode {
         this.x = x;
         this.y = y;
         this.tf = tf;
+        // 爆炸生音
+        //new Audio("audio/explode.wav").run();
     }
 
     public void paint(Graphics g) {
