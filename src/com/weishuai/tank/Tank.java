@@ -6,11 +6,11 @@ import java.util.Random;
 public class Tank {
     private int x, y;
     private Dir dir = Dir.DOWM;
-    private static final int SPEED = 1;
+    private static final int SPEED = 5;
 
     private boolean moving = true;
 
-    public static int WIDTH = ResourceMgr.tankD.getWidth(), HEIGHT = ResourceMgr.tankD.getHeight();
+    public static int WIDTH = ResourceMgr.goodTankU.getWidth(), HEIGHT = ResourceMgr.goodTankU.getHeight();
 
     private Random random = new Random();
     // 持有对象的引用
@@ -74,21 +74,19 @@ public class Tank {
     }
 
     public void paint(Graphics g) {
-        if (!living) {
-            tf.tanks.remove(this);
-        }
+        if (!living) tf.tanks.remove(this);
         switch (dir) {
             case LEFT:
-                g.drawImage(ResourceMgr.tankL, x, y, null);
+                g.drawImage(this.group == Group.GOOD ? ResourceMgr.goodTankL : ResourceMgr.badTankL, x, y, null);
                 break;
             case UP:
-                g.drawImage(ResourceMgr.tankU, x, y, null);
+                g.drawImage(this.group == Group.GOOD ? ResourceMgr.goodTankU : ResourceMgr.badTankU, x, y, null);
                 break;
             case RIGHT:
-                g.drawImage(ResourceMgr.tankR, x, y, null);
+                g.drawImage(this.group == Group.GOOD ? ResourceMgr.goodTankR : ResourceMgr.badTankR, x, y, null);
                 break;
             case DOWM:
-                g.drawImage(ResourceMgr.tankD, x, y, null);
+                g.drawImage(this.group == Group.GOOD ? ResourceMgr.goodTankD : ResourceMgr.badTankD, x, y, null);
                 break;
         }
         move();
@@ -114,9 +112,16 @@ public class Tank {
             default:
                 break;
         }
-        if (random.nextInt(10) > 8) {
+        if (this.group == Group.BAD && random.nextInt(100) > 95) {
             this.fire();
         }
+        if (this.group == Group.BAD && random.nextInt(100) > 95)
+            randomDir();
+    }
+
+    private void randomDir() {
+
+        this.dir = Dir.values()[random.nextInt(4)];
     }
 
     public void fire() {
