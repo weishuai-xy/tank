@@ -1,5 +1,7 @@
 package com.weishuai.tank;
 
+import com.weishuai.tank.abstractfactory.*;
+
 import java.awt.*;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
@@ -12,11 +14,13 @@ public class TankFrame extends Frame {
 
     // 初始化坦克位置
     Tank myTank = new Tank(200, 400, Dir.DOWM, Group.GOOD, this);
-    List<Bullet> bullets = new ArrayList<>();
-    List<Tank> tanks = new ArrayList<>();
-    List<Explode> explodes = new ArrayList<>();
+    public List<BaseBullet> bullets = new ArrayList<>();
+    public List<Tank> tanks = new ArrayList<>();
+    public List<BaseExplode> explodes = new ArrayList<>();
 
-    static final int GAME_WIDTH = 1080, GAME_HEIGHT = 960;
+    public GameFactry gf = new DefaultFactry();
+
+    public static final int GAME_WIDTH = 1080, GAME_HEIGHT = 960;
 
     /**
      * 窗口类 setSize setResizable setTitle  setVisible

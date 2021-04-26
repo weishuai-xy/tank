@@ -1,2 +1,9 @@
 # 初始化塔克数量
 initTankCount=10
+tankSpeed=5
+bulletSpeed=10
+gameWidth=1080
+gameHeight=720
+#fireStrategy
+goodFs=com.weishuai.tank.FourDirFireStrategy
+badFs=com.weishuai.tank.DefaultFireStrategy

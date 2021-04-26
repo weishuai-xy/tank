@@ -1,10 +1,13 @@
 package com.weishuai.tank;
 
+import com.weishuai.tank.abstractfactory.BaseTank;
+
 import java.awt.*;
+import java.lang.reflect.InvocationTargetException;
 import java.util.Random;
 
-public class Tank {
-    private int x, y;
+public class Tank extends BaseTank {
+    int x, y;
     private Dir dir = Dir.DOWM;
     private static final int SPEED = 5;
 
@@ -12,15 +15,17 @@ public class Tank {
 
     public static int WIDTH = ResourceMgr.goodTankU.getWidth(), HEIGHT = ResourceMgr.goodTankU.getHeight();
 
-    Rectangle rect = new Rectangle();
+    public Rectangle rect = new Rectangle();
 
     private Random random = new Random();
     // 持有对象的引用
-    private TankFrame tf = null;
+    public TankFrame tf = null;
 
     private boolean living = true;
 
-    private Group group = Group.BAD;
+    Group group = Group.BAD;
+
+    FireStrategy fs = new FourDirFireStrategy();
 
     public Tank(int x, int y, Dir dir,Group group, TankFrame tf) {
         super();
@@ -33,6 +38,23 @@ public class Tank {
         rect.y = this.y;
         rect.width = WIDTH;
         rect.height = HEIGHT;
+        if (group == Group.GOOD) {
+            String goodFsName = (String) PropertyMgr.get("goodFs");
+            try {
+                fs = (FireStrategy) Class.forName(goodFsName).getDeclaredConstructor().newInstance();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+
+        else {
+            String badFsName = (String) PropertyMgr.get("badFs");
+            try {
+                fs = (FireStrategy) Class.forName(badFsName).getDeclaredConstructor().newInstance();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        };
     }
 
     public int getX() {
@@ -79,6 +101,7 @@ public class Tank {
         this.group = group;
     }
 
+    @Override
     public void paint(Graphics g) {
         if (!living) tf.tanks.remove(this);
         switch (dir) {
@@ -147,9 +170,7 @@ public class Tank {
     }
 
     public void fire() {
-        int bX = this.x + Tank.WIDTH / 2 - Bullet.WIDTH / 2;
-        int bY = this.y + Tank.HEIGHT / 2 - Bullet.HEIGHT / 2;
-        tf.bullets.add(new Bullet(bX, bY, this.dir, this.group, this.tf));
+        fs.fire(this);
     }
 
     public void die() {
