@@ -10,11 +10,10 @@ import java.util.List;
 
 public class TankFrame extends Frame {
 
-    // 初始化坦克位置
-    Tank myTank = new Tank(200, 400, Dir.DOWM, Group.GOOD, this);
-    List<Bullet> bullets = new ArrayList<>();
-    List<Tank> tanks = new ArrayList<>();
-    List<Explode> explodes = new ArrayList<>();
+    GameModel gm = new GameModel();
+
+
+
 
     static final int GAME_WIDTH = 1080, GAME_HEIGHT = 960;
 
@@ -60,34 +59,8 @@ public class TankFrame extends Frame {
      */
     @Override
     public void paint(Graphics g) {
-        Color c = g.getColor();
-        g.setColor(Color.WHITE);
-        g.drawString("子弹的数量" + bullets.size(), 10,60);
-        g.drawString("敌人的数量" + tanks.size(), 10,80);
-        g.drawString("爆炸的数量" + explodes.size(), 10,100);
-        g.setColor(c);
-        // 画主坦克
-        myTank.paint(g);
-        for (int i = 0; i < bullets.size(); i++) {
-            // 画子弹
-            bullets.get(i).paint(g);
-        }
-        for (int i = 0; i < tanks.size(); i++) {
-            // 画敌人坦克
-            tanks.get(i).paint(g);
-        }
+        gm.paint(g);
 
-        // 消灭坦克  碰撞检测
-        for (int i = 0; i < bullets.size() ; i++) {
-            for (int j = 0; j < tanks.size() ; j++) {
-                bullets.get(i).collideWidth(tanks.get(j));
-            }
-        }
-
-        for (int i = 0; i < explodes.size(); i++) {
-            // 画敌人坦克
-            explodes.get(i).paint(g);
-        }
 
     }
 
@@ -123,6 +96,7 @@ public class TankFrame extends Frame {
 
         @Override
         public void keyReleased(KeyEvent e) {
+            Tank myTank = gm.getMainTank();
             int key = e.getKeyCode();
             switch (key) {
                 case KeyEvent.VK_LEFT:
@@ -148,10 +122,9 @@ public class TankFrame extends Frame {
         }
 
         private void setMainTankDir() {
-
-
+            Tank myTank = gm.getMainTank();
             if (!bL && !bU && !bR && !bD) {
-                myTank.setMoving(false);
+                gm.myTank.setMoving(false);
             } else {
                 myTank.setMoving(true);
                 if(bL) myTank.setDir(Dir.LEFT);
