@@ -10,7 +10,7 @@ import java.util.List;
 
 public class TankFrame extends Frame {
 
-    GameModel gm = new GameModel();
+//    GameModel gm = new GameModel();
 
 
 
@@ -59,9 +59,7 @@ public class TankFrame extends Frame {
      */
     @Override
     public void paint(Graphics g) {
-        gm.paint(g);
-
-
+        GameModel.getInstance().paint(g);
     }
 
     class MyKeyListener extends KeyAdapter {
@@ -96,7 +94,7 @@ public class TankFrame extends Frame {
 
         @Override
         public void keyReleased(KeyEvent e) {
-            Tank myTank = gm.getMainTank();
+            Tank myTank = GameModel.getInstance().getMainTank();
             int key = e.getKeyCode();
             switch (key) {
                 case KeyEvent.VK_LEFT:
@@ -122,9 +120,9 @@ public class TankFrame extends Frame {
         }
 
         private void setMainTankDir() {
-            Tank myTank = gm.getMainTank();
+            Tank myTank = GameModel.getInstance().getMainTank();
             if (!bL && !bU && !bR && !bD) {
-                gm.myTank.setMoving(false);
+                GameModel.getInstance().myTank.setMoving(false);
             } else {
                 myTank.setMoving(true);
                 if(bL) myTank.setDir(Dir.LEFT);

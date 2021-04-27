@@ -18,8 +18,6 @@ public class Bullet extends GameObject {
 
     private Group group = Group.BAD;
 
-    GameModel gm = null;
-
     public Group getGroup() {
         return group;
     }
@@ -28,12 +26,11 @@ public class Bullet extends GameObject {
         this.group = group;
     }
 
-    public Bullet(int x, int y, Dir dir, Group group, GameModel gm) {
+    public Bullet(int x, int y, Dir dir, Group group) {
         this.x = x;
         this.y = y;
         this.dir = dir;
         this.group = group;
-        this.gm = gm;
         rect.x = this.x;
         rect.y = this.y;
         rect.width = WIDTH;
@@ -43,7 +40,7 @@ public class Bullet extends GameObject {
     @Override
     public void paint(Graphics g) {
         if (!living) {
-            gm.remove(this);
+            GameModel.getInstance().remove(this);
         }
         switch (dir) {
             case LEFT:
@@ -90,20 +87,7 @@ public class Bullet extends GameObject {
         }
     }
 
-    public boolean collideWidth(Tank tank) {
-        if (this.group == tank.getGroup()) return false;
 
-        if (rect.intersects(tank.rect)) {
-            tank.die();
-            this.die();
-            int eX = tank.getX() + Tank.WIDTH / 2 - Explode.WIDTH / 2;
-            int eY = tank.getY() + Tank.HEIGHT / 2 - Explode.HEIGHT / 2;
-            // 爆炸
-            gm.add(new Explode(eX, eY, gm));
-            return true;
-        }
-        return false;
-    }
 
     public void die() {
         this.living = false;

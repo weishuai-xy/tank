@@ -1,8 +1,6 @@
 package com.weishuai.tank.cor;
 
-import com.weishuai.tank.Bullet;
-import com.weishuai.tank.GameObject;
-import com.weishuai.tank.Tank;
+import com.weishuai.tank.*;
 
 public class BulletTankCollider implements Collider{
     @Override
@@ -11,7 +9,16 @@ public class BulletTankCollider implements Collider{
             Bullet b = (Bullet) o1;
             Tank t = (Tank) o2;
             // TODO copy code from method
-            if(b.collideWidth(t)) {
+
+            if (b.getGroup() == t.getGroup()) return false;
+
+            if (b.rect.intersects(t.rect)) {
+                t.die();
+                b.die();
+                int eX = t.getX() + Tank.WIDTH / 2 - Explode.WIDTH / 2;
+                int eY = t.getY() + Tank.HEIGHT / 2 - Explode.HEIGHT / 2;
+                // 爆炸
+                GameModel.getInstance().add(new Explode(eX, eY));
                 return false;
             }
             return true;
@@ -21,6 +28,11 @@ public class BulletTankCollider implements Collider{
             return true;
         }
 
+    }
+
+    public boolean collideWidth(Tank tank) {
+
+        return false;
     }
 
 }

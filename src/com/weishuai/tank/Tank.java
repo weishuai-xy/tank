@@ -17,19 +17,17 @@ public class Tank extends GameObject{
 
     private Random random = new Random();
     // 持有对象的引用
-    GameModel gm = null;
 
     private boolean living = true;
 
     private Group group = Group.BAD;
 
-    public Tank(int x, int y, Dir dir,Group group, GameModel gm) {
+    public Tank(int x, int y, Dir dir,Group group) {
         super();
         this.x = x;
         this.y = y;
         this.dir = dir;
         this.group = group;
-        this.gm = gm;
         rect.x = this.x;
         rect.y = this.y;
         rect.width = WIDTH;
@@ -87,7 +85,7 @@ public class Tank extends GameObject{
 
     @Override
     public void paint(Graphics g) {
-        if (!living) gm.remove(this);
+        if (!living) GameModel.getInstance().remove(this);
         switch (dir) {
             case LEFT:
                 g.drawImage(this.group == Group.GOOD ? ResourceMgr.goodTankL : ResourceMgr.badTankL, x, y, null);
@@ -158,7 +156,7 @@ public class Tank extends GameObject{
     public void fire() {
         int bX = this.x + Tank.WIDTH / 2 - Bullet.WIDTH / 2;
         int bY = this.y + Tank.HEIGHT / 2 - Bullet.HEIGHT / 2;
-        gm.add(new Bullet(bX, bY, this.dir, this.group, gm));
+        GameModel.getInstance().add(new Bullet(bX, bY, this.dir, this.group));
     }
 
     public void die() {
