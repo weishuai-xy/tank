@@ -13,7 +13,7 @@ public class Tank extends GameObject{
 
     public static int WIDTH = ResourceMgr.goodTankU.getWidth(), HEIGHT = ResourceMgr.goodTankU.getHeight();
 
-    Rectangle rect = new Rectangle();
+    public Rectangle rect = new Rectangle();
 
     private Random random = new Random();
     // 持有对象的引用

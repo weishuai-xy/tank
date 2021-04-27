@@ -40,6 +40,10 @@ public class GameModel {
         for (int i = 0; i < initTankCount; i++) {
             add(new Tank(50 + i * 80, 200, Dir.DOWM, Group.BAD, this));
         }
+        add(new Wall(150,150,200,50));
+        add(new Wall(550,150,200,50));
+        add(new Wall(300,300,50,200));
+        add(new Wall(550,300,50,200));
 
     }
 

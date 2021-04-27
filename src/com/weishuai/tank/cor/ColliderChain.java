@@ -19,6 +19,7 @@ public class ColliderChain implements Collider{
     public ColliderChain() {
         try {
             String coliiderStr = (String) PropertyMgr.get("coliiders");
+            System.out.println(coliiderStr);
             if (StringUtils.isNotBlank(coliiderStr)) {
                 String[] split = coliiderStr.split(",");
                 for (String className: split) {
