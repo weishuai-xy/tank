@@ -3,8 +3,9 @@ package com.weishuai.tank;
 import java.awt.*;
 import java.util.Random;
 
-public class Tank {
+public class Tank extends GameObject{
     private int x, y;
+    private int oldX, oldY;
     private Dir dir = Dir.DOWM;
     private static final int SPEED = 5;
 
@@ -79,8 +80,14 @@ public class Tank {
         this.group = group;
     }
 
+    public Rectangle getRect() {
+        return rect;
+    }
+
+
+    @Override
     public void paint(Graphics g) {
-        if (!living) gm.tanks.remove(this);
+        if (!living) gm.remove(this);
         switch (dir) {
             case LEFT:
                 g.drawImage(this.group == Group.GOOD ? ResourceMgr.goodTankL : ResourceMgr.badTankL, x, y, null);
@@ -100,6 +107,8 @@ public class Tank {
     }
 
     private void move() {
+        oldX = x;
+        oldY = y;
         if (!moving) return;
         // 根据方向移动
         switch (dir) {
@@ -149,10 +158,19 @@ public class Tank {
     public void fire() {
         int bX = this.x + Tank.WIDTH / 2 - Bullet.WIDTH / 2;
         int bY = this.y + Tank.HEIGHT / 2 - Bullet.HEIGHT / 2;
-        gm.bullets.add(new Bullet(bX, bY, this.dir, this.group, gm));
+        gm.add(new Bullet(bX, bY, this.dir, this.group, gm));
     }
 
     public void die() {
         this.living = false;
+    }
+
+    public void stop() {
+        this.moving = false;
+    }
+
+    public void prePoriotion() {
+        this.x = oldX;
+        this.y = oldY;
     }
 }

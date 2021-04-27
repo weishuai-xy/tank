@@ -1,2 +1,3 @@
 # 初始化塔克数量
 initTankCount=10
+coliiders=com.weishuai.tank.cor.BulletTankCollider,com.weishuai.tank.cor.TankTankCollider
