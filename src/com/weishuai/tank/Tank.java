@@ -1,10 +1,12 @@
 package com.weishuai.tank;
 
+import com.weishuai.tank.decorator.RectDecorator;
+import com.weishuai.tank.decorator.TaillDecorator;
+
 import java.awt.*;
 import java.util.Random;
 
 public class Tank extends GameObject{
-    private int x, y;
     private int oldX, oldY;
     private Dir dir = Dir.DOWM;
     private static final int SPEED = 5;
@@ -32,6 +34,7 @@ public class Tank extends GameObject{
         rect.y = this.y;
         rect.width = WIDTH;
         rect.height = HEIGHT;
+        GameModel.getInstance().add(this);
     }
 
     public int getX() {
@@ -104,6 +107,16 @@ public class Tank extends GameObject{
 
     }
 
+    @Override
+    public int getWidth() {
+        return WIDTH;
+    }
+
+    @Override
+    public int getHeight() {
+        return HEIGHT;
+    }
+
     private void move() {
         oldX = x;
         oldY = y;
@@ -156,7 +169,8 @@ public class Tank extends GameObject{
     public void fire() {
         int bX = this.x + Tank.WIDTH / 2 - Bullet.WIDTH / 2;
         int bY = this.y + Tank.HEIGHT / 2 - Bullet.HEIGHT / 2;
-        GameModel.getInstance().add(new Bullet(bX, bY, this.dir, this.group));
+        // TODO 多加了一遍
+        GameModel.getInstance().add(new TaillDecorator(new RectDecorator(new Bullet(bX, bY, this.dir, this.group))));
     }
 
     public void die() {

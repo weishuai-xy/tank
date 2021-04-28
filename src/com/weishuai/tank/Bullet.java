@@ -10,8 +10,6 @@ public class Bullet extends GameObject {
 
     public Rectangle rect = new Rectangle();
 
-    private int x, y;
-
     private Dir dir;
 
     private boolean living = true;
@@ -35,6 +33,7 @@ public class Bullet extends GameObject {
         rect.y = this.y;
         rect.width = WIDTH;
         rect.height = HEIGHT;
+        GameModel.getInstance().add(this);
     }
 
     @Override
@@ -58,6 +57,16 @@ public class Bullet extends GameObject {
         }
         move();
 
+    }
+
+    @Override
+    public int getWidth() {
+        return WIDTH;
+    }
+
+    @Override
+    public int getHeight() {
+        return HEIGHT;
     }
 
     private void move() {

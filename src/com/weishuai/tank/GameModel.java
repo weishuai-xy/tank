@@ -14,8 +14,12 @@ public class GameModel {
 
     private static final GameModel INSTANCE = new GameModel();
 
+    static {
+        INSTANCE.init();
+    }
+
     // 初始化坦克位置
-    Tank myTank = new Tank(200, 400, Dir.DOWM, Group.GOOD);
+    Tank myTank = null;
 //    List<Bullet> bullets = new ArrayList<>();
 //    List<Tank> tanks = new ArrayList<>();
 //    List<Explode> explodes = new ArrayList<>();
@@ -35,15 +39,21 @@ public class GameModel {
     }
 
     private  GameModel () {
+
+    }
+
+    private void init() {
+        // 初始化主战坦克
+        myTank = new Tank(200, 400, Dir.DOWM, Group.GOOD);
         int initTankCount = Integer.valueOf((String)(PropertyMgr.get("initTankCount")));
         // 默认加入五个敌方坦克
         for (int i = 0; i < initTankCount; i++) {
-            add(new Tank(50 + i * 80, 200, Dir.DOWM, Group.BAD));
+            new Tank(50 + i * 80, 200, Dir.DOWM, Group.BAD);
         }
-        add(new Wall(150,150,200,50));
-        add(new Wall(550,150,200,50));
-        add(new Wall(300,300,50,200));
-        add(new Wall(550,300,50,200));
+        new Wall(150,150,200,50);
+        new Wall(550,150,200,50);
+        new Wall(300,300,50,200);
+        new Wall(550,300,50,200);
     }
 
     public static GameModel getInstance() {
